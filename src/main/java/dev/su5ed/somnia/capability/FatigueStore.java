@@ -11,7 +11,7 @@ public class FatigueStore implements Fatigue {
         Codec.INT.fieldOf("sideEffectStage").forGetter(FatigueStore::getSideEffectStage),
         Codec.BOOL.fieldOf("resetSpawn").forGetter(FatigueStore::getResetSpawn)
     ).apply(instance, FatigueStore::new));
-    
+
     private double fatigue;
     private double extraFatigueRate;
     private double replenishedFatigue;

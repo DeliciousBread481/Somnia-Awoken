@@ -18,6 +18,7 @@ build
 .gradle
 
 # other
+*.py
 eclipse
 run
 runs

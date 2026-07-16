@@ -73,6 +73,8 @@ public final class SomniaConfig {
         public final ModConfigSpec.BooleanValue enableFatigue;
         public final ModConfigSpec.DoubleValue fatigueRate;
         public final ModConfigSpec.DoubleValue fatigueReplenishRate;
+        public final ModConfigSpec.BooleanValue soloSleepReplenish;
+        public final ModConfigSpec.DoubleValue soloSleepReplenishMultiplier;
         public final ModConfigSpec.BooleanValue fatigueSideEffects;
         public final ModConfigSpec.ConfigValue<Integer> minimumFatigueToSleep;
         public final ModConfigSpec.ConfigValue<List<? extends List<Object>>> sideEffectStages;
@@ -108,6 +110,12 @@ public final class SomniaConfig {
             fatigueReplenishRate = builder
                 .comment("Fatigue is decreased by this number every tick while you sleep")
                 .defineInRange("fatigueReplenishRate", 0.00833, 0.0, 1.0);
+            soloSleepReplenish = builder
+                .comment("In multiplayer, when you sleep alone and time is NOT accelerated, still replenish fatigue at the accelerated rate (multiplied by maxMultiplier).")
+                .define("soloSleepReplenish", true);
+            soloSleepReplenishMultiplier = builder
+                .comment("Constant replenish multiplier used by soloSleepReplenish. Higher = faster recovery when sleeping alone. Keep it moderate so fatigue doesn't refill instantly.")
+                .defineInRange("soloSleepReplenishMultiplier", 10.0, 1.0, 100.0);
             fatigueSideEffects = builder
                 .comment("Enables fatigue side effects")
                 .define("fatigueSideEffects", true);

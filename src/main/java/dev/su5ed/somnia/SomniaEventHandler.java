@@ -1,5 +1,6 @@
 package dev.su5ed.somnia;
 
+import dev.su5ed.somnia.acceleration.AccelerationManager;
 import dev.su5ed.somnia.api.SomniaAPI;
 import dev.su5ed.somnia.capability.CapabilityFatigue;
 import dev.su5ed.somnia.capability.Fatigue;
@@ -49,12 +50,17 @@ public final class SomniaEventHandler {
 
             if (fatigueRate > 0) {
                 if (isSleeping) {
+                    double replenishMultiplier = 1.0;
+                    if (SomniaConfig.COMMON.soloSleepReplenish.get()
+                        && !AccelerationManager.isLevelAccelerating(event.player.level())) {
+                        replenishMultiplier = SomniaConfig.COMMON.soloSleepReplenishMultiplier.get();
+                    }
+
                     double share = fatigueReplenishRate / fatigueRate;
                     double replenish = fatigueReplenishRate * share;
-
-                    fatigue -= fatigueReplenishRate;
-                    extraFatigueRate -= fatigueRate / replenishedFatigue / 10;
-                    replenishedFatigue -= replenish;
+                    fatigue -= fatigueReplenishRate * replenishMultiplier;
+                    extraFatigueRate -= fatigueRate / replenishedFatigue / 10 * replenishMultiplier;
+                    replenishedFatigue -= replenish * replenishMultiplier;
                 }
                 else {
                     double adjustedRate = fatigueRate;

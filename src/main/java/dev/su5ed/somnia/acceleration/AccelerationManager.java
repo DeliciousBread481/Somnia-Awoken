@@ -2,6 +2,7 @@ package dev.su5ed.somnia.acceleration;
 
 import dev.su5ed.somnia.SomniaAwoken;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
@@ -16,6 +17,12 @@ public final class AccelerationManager {
 
     public static int getActiveHandlers() {
         return (int) HANDLERS.stream().filter(AccelerationHandler::isActive).count();
+    }
+
+    public static boolean isLevelAccelerating(Level level) {
+        return HANDLERS.stream()
+            .filter(handler -> handler.level == level)
+            .anyMatch(AccelerationHandler::isActive);
     }
 
     @SubscribeEvent
