@@ -73,6 +73,7 @@ public final class SomniaConfig {
         public final ForgeConfigSpec.BooleanValue enableFatigue;
         public final ForgeConfigSpec.DoubleValue fatigueRate;
         public final ForgeConfigSpec.DoubleValue fatigueReplenishRate;
+        public final ForgeConfigSpec.DoubleValue unacceleratedReplenishMultiplier;
         public final ForgeConfigSpec.BooleanValue fatigueSideEffects;
         public final ForgeConfigSpec.ConfigValue<Integer> minimumFatigueToSleep;
         public final ForgeConfigSpec.ConfigValue<List<? extends List<Object>>> sideEffectStages;
@@ -108,6 +109,9 @@ public final class SomniaConfig {
             fatigueReplenishRate = builder
                 .comment("Fatigue is decreased by this number every tick while you sleep")
                 .defineInRange("fatigueReplenishRate", 0.00833, 0.0, 1.0);
+            unacceleratedReplenishMultiplier = builder
+                .comment("When the world is NOT time-accelerated (e.g. only some players sleep in multiplayer), fatigue replenish is multiplied by this value so a lone sleeper still recovers reasonably. Set to 1.0 to disable. No effect in singleplayer.")
+                .defineInRange("unacceleratedReplenishMultiplier", 40.0, 1.0, 100.0);
             fatigueSideEffects = builder
                 .comment("Enables fatigue side effects")
                 .define("fatigueSideEffects", true);

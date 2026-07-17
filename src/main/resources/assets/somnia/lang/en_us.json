@@ -19,14 +19,14 @@
   "somnia.side_effect.2": "Exhausted",
   "somnia.side_effect.3": "Sleep Deprived",
   "somnia.side_effect.4": "Fading",
-  
+
   "somnia.gui.fatigue": "Fatigue: %s",
   "somnia.gui.cancel": "Cancel",
   "somnia.gui.reset_spawn": "Reset Spawn: Yes",
   "somnia.gui.no_reset_spawn": "Reset Spawn: No",
   "somnia.gui.select_wake_time": "Select Wake Time",
   "somnia.gui.wts_title": "Sleep until...?",
-  
+
   "somnia.gui.time_midnight": "Midnight",
   "somnia.gui.time_after_midnight": "After Midnight",
   "somnia.gui.time_before_sunrise": "Before Sunrise",

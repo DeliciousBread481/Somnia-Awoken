@@ -1,6 +1,7 @@
 package dev.su5ed.somnia;
 
 import dev.su5ed.somnia.api.SomniaAPI;
+import dev.su5ed.somnia.acceleration.AccelerationManager;
 import dev.su5ed.somnia.capability.CapabilityFatigue;
 import dev.su5ed.somnia.compat.Compat;
 import dev.su5ed.somnia.network.SomniaNetwork;
@@ -8,6 +9,7 @@ import dev.su5ed.somnia.network.client.FatigueUpdatePacket;
 import dev.su5ed.somnia.network.client.OpenGUIPacket;
 import dev.su5ed.somnia.util.SideEffectStage;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -46,10 +48,17 @@ public final class SomniaEventHandler {
 
             if (fatigueRate > 0) {
                 if (isSleeping) {
-                    double share = fatigueReplenishRate / fatigueRate;
-                    double replenish = fatigueReplenishRate * share;
+                    double replenishMultiplier = 1.0;
+                    if (event.player.level() instanceof ServerLevel serverLevel
+                        && !AccelerationManager.isLevelAccelerating(serverLevel)) {
+                        replenishMultiplier = SomniaConfig.COMMON.unacceleratedReplenishMultiplier.get();
+                    }
+                    double effectiveReplenishRate = fatigueReplenishRate * replenishMultiplier;
 
-                    fatigue -= fatigueReplenishRate;
+                    double share = fatigueReplenishRate / fatigueRate;
+                    double replenish = effectiveReplenishRate * share;
+
+                    fatigue -= effectiveReplenishRate;
                     extraFatigueRate -= fatigueRate / replenishedFatigue / 10;
                     replenishedFatigue -= replenish;
                 }

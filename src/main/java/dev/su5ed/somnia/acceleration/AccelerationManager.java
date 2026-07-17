@@ -18,6 +18,14 @@ public final class AccelerationManager {
         return (int) HANDLERS.stream().filter(AccelerationHandler::isActive).count();
     }
 
+    public static boolean isLevelAccelerating(ServerLevel level) {
+        return HANDLERS.stream()
+            .filter(handler -> handler.level == level)
+            .findFirst()
+            .map(AccelerationHandler::isActive)
+            .orElse(false);
+    }
+
     @SubscribeEvent
     public static void onWorldLoad(LevelEvent.Load event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {

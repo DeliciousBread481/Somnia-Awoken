@@ -7,6 +7,6 @@ public final class ClientSetup {
     static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerBelowAll("fatigue_overlay", ClientSleepHandler.INSTANCE::renderGuiOverlay);
     }
-    
+
     private ClientSetup() {}
 }
